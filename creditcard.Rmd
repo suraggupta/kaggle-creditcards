@@ -1,0 +1,30 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+required_packages <- c( 
+  # Add to this list the packages that you will use - if unavailable, it will be 
+  # automatically installed
+  "readr",
+  "data.table",
+  "dplyr"
+    )
+
+  packages_to_install = required_packages[!(required_packages %in% 
+                                                installed.packages()[, 1])]
+    
+  if (length(packages_to_install) > 0) {
+    install.packages(packages_to_install)
+  }
+    
+  suppressPackageStartupMessages({
+    sapply(required_packages, require, character.only = TRUE)
+  })
+```
+
+```{r}
+df <- read_csv("creditcard.csv")
+```
+
