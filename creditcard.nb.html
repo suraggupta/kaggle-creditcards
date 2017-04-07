@@ -175,13 +175,15 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZWRfcGFja2FnZXMgPC0gYyggXG4gICMgQWRkIHRvIHRoaXMgbGlzdCB0aGUgcGFja2FnZXMgdGhhdCB5b3Ugd2lsbCB1c2UgLSBpZiB1bmF2YWlsYWJsZSwgaXQgd2lsbCBiZSBcbiAgIyBhdXRvbWF0aWNhbGx5IGluc3RhbGxlZFxuICBcInJlYWRyXCIsXG4gIFwiZGF0YS50YWJsZVwiLFxuICBcImRwbHlyXCJcbiAgICApXG4gIHBhY2thZ2VzX3RvX2luc3RhbGwgPSByZXF1aXJlZF9wYWNrYWdlc1shKHJlcXVpcmVkX3BhY2thZ2VzICVpbiUgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0YWxsZWQucGFja2FnZXMoKVssIDFdKV1cbiAgICBcbiAgaWYgKGxlbmd0aChwYWNrYWdlc190b19pbnN0YWxsKSA+IDApIHtcbiAgICBpbnN0YWxsLnBhY2thZ2VzKHBhY2thZ2VzX3RvX2luc3RhbGwpXG4gIH1cbiAgICBcbiAgc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKHtcbiAgICBzYXBwbHkocmVxdWlyZWRfcGFja2FnZXMsIHJlcXVpcmUsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgfSlcbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmVxdWlyZWRfcGFja2FnZXMgPC0gYyggXG4gICMgQWRkIHRvIHRoaXMgbGlzdCB0aGUgcGFja2FnZXMgdGhhdCB5b3Ugd2lsbCB1c2UgLSBpZiB1bmF2YWlsYWJsZSwgaXQgd2lsbCBiZSBcbiAgIyBhdXRvbWF0aWNhbGx5IGluc3RhbGxlZFxuICBcInJlYWRyXCIsXG4gIFwiZGF0YS50YWJsZVwiLFxuICBcImRwbHlyXCIsXG4gIFwiZ2dwbG90MlwiLFxuICBcIm1sclwiXG4gICAgKVxuICBwYWNrYWdlc190b19pbnN0YWxsID0gcmVxdWlyZWRfcGFja2FnZXNbIShyZXF1aXJlZF9wYWNrYWdlcyAlaW4lIFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zdGFsbGVkLnBhY2thZ2VzKClbLCAxXSldXG4gICAgXG4gIGlmIChsZW5ndGgocGFja2FnZXNfdG9faW5zdGFsbCkgPiAwKSB7XG4gICAgaW5zdGFsbC5wYWNrYWdlcyhwYWNrYWdlc190b19pbnN0YWxsKVxuICB9XG4gICAgXG4gIHN1cHByZXNzUGFja2FnZVN0YXJ0dXBNZXNzYWdlcyh7XG4gICAgc2FwcGx5KHJlcXVpcmVkX3BhY2thZ2VzLCByZXF1aXJlLCBjaGFyYWN0ZXIub25seSA9IFRSVUUpXG4gIH0pXG5gYGAifQ== -->
 <pre class="r"><code>required_packages &lt;- c( 
   # Add to this list the packages that you will use - if unavailable, it will be 
   # automatically installed
   &quot;readr&quot;,
   &quot;data.table&quot;,
-  &quot;dplyr&quot;
+  &quot;dplyr&quot;,
+  &quot;ggplot2&quot;,
+  &quot;mlr&quot;
     )
   packages_to_install = required_packages[!(required_packages %in% 
                                                 installed.packages()[, 1])]
@@ -194,34 +196,76 @@ $(document).ready(function () {
     sapply(required_packages, require, character.only = TRUE)
   })</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICByZWFkciBkYXRhLnRhYmxlICAgICAgZHBseXIgXG4gICAgICBUUlVFICAgICAgIFRSVUUgICAgICAgVFJVRSBcbiJ9 -->
-<pre><code>     readr data.table      dplyr 
-      TRUE       TRUE       TRUE </code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDigJhtbHLigJkgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiAzLjMuM3BhY2thZ2Ug4oCYUGFyYW1IZWxwZXJz4oCZIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gMy4zLjNcbiJ9 -->
+<pre><code>package mlr was built under R version 3.3.3package ParamHelpers was built under R version 3.3.3</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICByZWFkciBkYXRhLnRhYmxlICAgICAgZHBseXIgICAgZ2dwbG90MiAgICAgICAgbWxyIFxuICAgICAgVFJVRSAgICAgICBUUlVFICAgICAgIFRSVUUgICAgICAgVFJVRSAgICAgICBUUlVFIFxuIn0= -->
+<pre><code>     readr data.table      dplyr    ggplot2        mlr 
+      TRUE       TRUE       TRUE       TRUE       TRUE </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgPC0gcmVhZF9jc3YoXCJjcmVkaXRjYXJkLmNzdlwiKVxuYGBgIn0= -->
-<pre class="r"><code>df &lt;- read_csv(&quot;creditcard.csv&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgPC0gZnJlYWQoXCJjcmVkaXRjYXJkLmNzdlwiKVxuYGBgIn0= -->
+<pre class="r"><code>df &lt;- fread(&quot;creditcard.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICAuZGVmYXVsdCA9IGNvbF9kb3VibGUoKSxcbiAgVGltZSA9IGNvbF9pbnRlZ2VyKCksXG4gIENsYXNzID0gY29sX2ludGVnZXIoKVxuKVxuU2VlIHNwZWMoLi4uKSBmb3IgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbnMuXG4xIHBhcnNpbmcgZmFpbHVyZS5cbiAgIHJvdyAgY29sICAgICAgICAgICAgICAgZXhwZWN0ZWQgYWN0dWFsXG4xNTM3NTkgVGltZSBubyB0cmFpbGluZyBjaGFyYWN0ZXJzICAgZSswNVxuIn0= -->
-<pre><code>Parsed with column specification:
-cols(
-  .default = col_double(),
-  Time = col_integer(),
-  Class = col_integer()
-)
-See spec(...) for full column specifications.
-1 parsing failure.
-   row  col               expected actual
-153759 Time no trailing characters   e+05</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiXG5SZWFkIDE0LjAlIG9mIDI4NDgwNyByb3dzXG5SZWFkIDI4LjElIG9mIDI4NDgwNyByb3dzXG5SZWFkIDQyLjElIG9mIDI4NDgwNyByb3dzXG5SZWFkIDU2LjIlIG9mIDI4NDgwNyByb3dzXG5SZWFkIDY2LjclIG9mIDI4NDgwNyByb3dzXG5SZWFkIDgwLjglIG9mIDI4NDgwNyByb3dzXG5SZWFkIDk0LjglIG9mIDI4NDgwNyByb3dzXG5SZWFkIDI4NDgwNyByb3dzIGFuZCAzMSAob2YgMzEpIGNvbHVtbnMgZnJvbSAwLjE0MCBHQiBmaWxlIGluIDAwOjAwOjEwXG4ifQ== -->
+<pre><code>
+Read 14.0% of 284807 rows
+Read 28.1% of 284807 rows
+Read 42.1% of 284807 rows
+Read 56.2% of 284807 rows
+Read 66.7% of 284807 rows
+Read 80.8% of 284807 rows
+Read 94.8% of 284807 rows
+Read 284807 rows and 31 (of 31) columns from 0.140 GB file in 00:00:10</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgPC0gZGYgJT4lIFxuICBkYXRhLmZyYW1lKCkgJT4lIFxuICBtdXRhdGUoQ2xhc3MgPSBhcy5mYWN0b3IoQ2xhc3MpKVxuYGBgIn0= -->
+<pre class="r"><code>df &lt;- df %&gt;% 
+  data.frame() %&gt;% 
+  mutate(Class = as.factor(Class))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Let us plot the distribution of the <code>class</code> variable:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2dwbG90KGRmKSArIFxuICBnZW9tX2JhcihhZXMoeCA9IENsYXNzKSwgd2lkdGggPSAwLjUpICsgXG4gIGdndGl0bGUoXCJEaXN0cmlidXRpb24gb2YgY2xhc3Nlc1wiKSArIFxuICB0aGVtZShwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSlcbmBgYCJ9 -->
+<pre class="r"><code>ggplot(df) + 
+  geom_bar(aes(x = Class), width = 0.5) + 
+  ggtitle(&quot;Distribution of classes&quot;) + 
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-plot-begin eyJjb25kaXRpb25zIjpbXSwiaGVpZ2h0Ijo0MDEuNzMwNSwic2l6ZV9iZWhhdmlvciI6MCwid2lkdGgiOjY1MH0= -->
+<p><img src="data:image/png;base64,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" /></p>
+<!-- rnb-plot-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoZGYkQ2xhc3MpXG5gYGAifQ== -->
+<pre class="r"><code>table(df$Class)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAgIDAgICAgICAxIFxuMjg0MzE1ICAgIDQ5MiBcbiJ9 -->
+<pre><code>
+     0      1 
+284315    492 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>It is clear that the class is highly imbalanced. Therefore, it would be necessary to resample the dataset in such a way that the classes are balanced. There are a few ways to go about this. One option is doing undersampling (remove instances from the majority class to make the dataset balanced) or oversampling (replicate instances from the minority class to make the dataset balanced).</p>
+<p>Let us begin by splitting our dataset into test and train. We use the <code>mlr</code> package in R for this exercise.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1xuYGBgIn0= -->
+<pre class="r"><code>#</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnJlcXVpcmVkX3BhY2thZ2VzIDwtIGMoIA0KICAjIEFkZCB0byB0aGlzIGxpc3QgdGhlIHBhY2thZ2VzIHRoYXQgeW91IHdpbGwgdXNlIC0gaWYgdW5hdmFpbGFibGUsIGl0IHdpbGwgYmUgDQogICMgYXV0b21hdGljYWxseSBpbnN0YWxsZWQNCiAgInJlYWRyIiwNCiAgImRhdGEudGFibGUiLA0KICAiZHBseXIiDQogICAgKQ0KDQogIHBhY2thZ2VzX3RvX2luc3RhbGwgPSByZXF1aXJlZF9wYWNrYWdlc1shKHJlcXVpcmVkX3BhY2thZ2VzICVpbiUgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0YWxsZWQucGFja2FnZXMoKVssIDFdKV0NCiAgICANCiAgaWYgKGxlbmd0aChwYWNrYWdlc190b19pbnN0YWxsKSA+IDApIHsNCiAgICBpbnN0YWxsLnBhY2thZ2VzKHBhY2thZ2VzX3RvX2luc3RhbGwpDQogIH0NCiAgICANCiAgc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKHsNCiAgICBzYXBwbHkocmVxdWlyZWRfcGFja2FnZXMsIHJlcXVpcmUsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgfSkNCmBgYA0KDQpgYGB7cn0NCmRmIDwtIHJlYWRfY3N2KCJjcmVkaXRjYXJkLmNzdiIpDQpgYGANCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCi0tLQ0KDQpgYGB7cn0NCnJlcXVpcmVkX3BhY2thZ2VzIDwtIGMoIA0KICAjIEFkZCB0byB0aGlzIGxpc3QgdGhlIHBhY2thZ2VzIHRoYXQgeW91IHdpbGwgdXNlIC0gaWYgdW5hdmFpbGFibGUsIGl0IHdpbGwgYmUgDQogICMgYXV0b21hdGljYWxseSBpbnN0YWxsZWQNCiAgInJlYWRyIiwNCiAgImRhdGEudGFibGUiLA0KICAiZHBseXIiLA0KICAiZ2dwbG90MiIsDQogICJtbHIiDQogICAgKQ0KDQogIHBhY2thZ2VzX3RvX2luc3RhbGwgPSByZXF1aXJlZF9wYWNrYWdlc1shKHJlcXVpcmVkX3BhY2thZ2VzICVpbiUgDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnN0YWxsZWQucGFja2FnZXMoKVssIDFdKV0NCiAgICANCiAgaWYgKGxlbmd0aChwYWNrYWdlc190b19pbnN0YWxsKSA+IDApIHsNCiAgICBpbnN0YWxsLnBhY2thZ2VzKHBhY2thZ2VzX3RvX2luc3RhbGwpDQogIH0NCiAgICANCiAgc3VwcHJlc3NQYWNrYWdlU3RhcnR1cE1lc3NhZ2VzKHsNCiAgICBzYXBwbHkocmVxdWlyZWRfcGFja2FnZXMsIHJlcXVpcmUsIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSkNCiAgfSkNCmBgYA0KDQpgYGB7cn0NCmRmIDwtIGZyZWFkKCJjcmVkaXRjYXJkLmNzdiIpDQpgYGANCg0KYGBge3J9DQpkZiA8LSBkZiAlPiUgDQogIGRhdGEuZnJhbWUoKSAlPiUgDQogIG11dGF0ZShDbGFzcyA9IGFzLmZhY3RvcihDbGFzcykpDQpgYGANCg0KDQpMZXQgdXMgcGxvdCB0aGUgZGlzdHJpYnV0aW9uIG9mIHRoZSBgY2xhc3NgIHZhcmlhYmxlOg0KDQpgYGB7cn0NCmdncGxvdChkZikgKyANCiAgZ2VvbV9iYXIoYWVzKHggPSBDbGFzcyksIHdpZHRoID0gMC41KSArIA0KICBnZ3RpdGxlKCJEaXN0cmlidXRpb24gb2YgY2xhc3NlcyIpICsgDQogIHRoZW1lKHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKQ0KDQp0YWJsZShkZiRDbGFzcykNCmBgYA0KDQpJdCBpcyBjbGVhciB0aGF0IHRoZSBjbGFzcyBpcyBoaWdobHkgaW1iYWxhbmNlZC4gVGhlcmVmb3JlLCBpdCB3b3VsZCBiZSBuZWNlc3NhcnkgdG8gcmVzYW1wbGUgdGhlIGRhdGFzZXQgaW4gc3VjaCBhIHdheSB0aGF0IHRoZSBjbGFzc2VzIGFyZSBiYWxhbmNlZC4gVGhlcmUgYXJlIGEgZmV3IHdheXMgdG8gZ28gYWJvdXQgdGhpcy4gT25lIG9wdGlvbiBpcyBkb2luZyB1bmRlcnNhbXBsaW5nIChyZW1vdmUgaW5zdGFuY2VzIGZyb20gdGhlIG1ham9yaXR5IGNsYXNzIHRvIG1ha2UgdGhlIGRhdGFzZXQgYmFsYW5jZWQpIG9yIG92ZXJzYW1wbGluZyAocmVwbGljYXRlIGluc3RhbmNlcyBmcm9tIHRoZSBtaW5vcml0eSBjbGFzcyB0byBtYWtlIHRoZSBkYXRhc2V0IGJhbGFuY2VkKS4NCg0KTGV0IHVzIGJlZ2luIGJ5IHNwbGl0dGluZyBvdXIgZGF0YXNldCBpbnRvIHRlc3QgYW5kIHRyYWluLiBXZSB1c2UgdGhlIGBtbHJgIHBhY2thZ2UgaW4gUiBmb3IgdGhpcyBleGVyY2lzZS4NCg0KYGBge3J9DQojDQpgYGANCg0KDQoNCg==</div>
 
 
 

@@ -9,7 +9,9 @@ required_packages <- c(
   # automatically installed
   "readr",
   "data.table",
-  "dplyr"
+  "dplyr",
+  "ggplot2",
+  "mlr"
     )
 
   packages_to_install = required_packages[!(required_packages %in% 
@@ -25,6 +27,34 @@ required_packages <- c(
 ```
 
 ```{r}
-df <- read_csv("creditcard.csv")
+df <- fread("creditcard.csv")
 ```
+
+```{r}
+df <- df %>% 
+  data.frame() %>% 
+  mutate(Class = as.factor(Class))
+```
+
+
+Let us plot the distribution of the `class` variable:
+
+```{r}
+ggplot(df) + 
+  geom_bar(aes(x = Class), width = 0.5) + 
+  ggtitle("Distribution of classes") + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+table(df$Class)
+```
+
+It is clear that the class is highly imbalanced. Therefore, it would be necessary to resample the dataset in such a way that the classes are balanced. There are a few ways to go about this. One option is doing undersampling (remove instances from the majority class to make the dataset balanced) or oversampling (replicate instances from the minority class to make the dataset balanced).
+
+Let us begin by splitting our dataset into test and train. We use the `mlr` package in R for this exercise.
+
+```{r}
+#
+```
+
+
 
