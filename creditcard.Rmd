@@ -11,7 +11,9 @@ required_packages <- c(
   "data.table",
   "dplyr",
   "ggplot2",
-  "mlr"
+  "tidyr",
+  "purrr",
+  "broom"
     )
 
   packages_to_install = required_packages[!(required_packages %in% 
@@ -36,6 +38,43 @@ df <- df %>%
   mutate(Class = as.factor(Class))
 ```
 
+```{r}
+#Set seed for random sampling
+set.seed(42)
+
+trainIndex <- createDataPartition(df$Class, 
+                                  p = 0.8, #Proportion of training data
+                                  list = FALSE, 
+                                  times = 1)
+
+df_train <- df[trainIndex,]
+df_test  <- df[-trainIndex,]
+
+```
+
+
+```{r}
+df_train <- df_train %>% 
+  mutate(A1 = ifelse(V1 < 2,1,0),
+         A2 = ifelse(V2 > 1.5,1,0),
+         A3 = ifelse(V3 < 2,1,0),
+         A4 = ifelse(V4 > 2.5,1,0),
+         A5 = ifelse(V5 < -1.7,1,0),
+         A6 = ifelse(V6 < -1.7,1,0),
+         A7 = ifelse(V7 < -1.8,1,0),
+         A9 = ifelse(V9 < -2,1,0),
+         A10 = ifelse(V10 < -1.5,1,0),
+         A11 = ifelse(V11 > 2.5,1,0),
+         A12 = ifelse(V12 < -2.5,1,0),
+         A14 = ifelse(V14 < -1.5,1,0),
+         A16 = ifelse(V16 < -2,1,0),
+         A17 = ifelse(V17 <-1,1,0),
+         A18 = ifelse(V18 < -2.5,1,0),
+         A19 = ifelse(V19 > 2,1,0),
+         A21 = ifelse(V21 > 0.7,1,0))
+```
+
+
 
 Let us plot the distribution of the `class` variable:
 
@@ -47,6 +86,21 @@ ggplot(df) +
 
 table(df$Class)
 ```
+
+
+```{r}
+df <- df %>% 
+    select(-V8,-V13,-V15,-V20,-V22,-V23,-V24,-V25,-V26,-V27,-V28)
+```
+
+```{r}
+lul <- df %>% 
+  group_by(Class) %>% 
+  nest() %>% 
+  mutate(qs = map(data, t(quantile(V1, probs = c(0.5,0.75)))))
+```
+
+
 
 It is clear that the class is highly imbalanced. Therefore, it would be necessary to resample the dataset in such a way that the classes are balanced. There are a few ways to go about this. One option is doing undersampling (remove instances from the majority class to make the dataset balanced) or oversampling (replicate instances from the minority class to make the dataset balanced).
 
