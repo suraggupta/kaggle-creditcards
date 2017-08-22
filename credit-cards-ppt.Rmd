@@ -1,0 +1,89 @@
+---
+title: "Maching Learning in R using mlR"
+author: "Surag Gupta"
+date: "August 20, 2017"
+output: beamer_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      cache = TRUE)
+```
+
+## About me
+
+- Senior Analyst, Assortment Optimization
+- MS Business Analytics, University of Minnesota (Class of 2017)
+  - which means I'm a relatively new team member
+- Worked as a Decision Scientist for 3 years prior to my graduate program
+- R Enthusiast (This would be a good time for you to notice my t-shirt, if you haven't already)
+
+## Disclaimer
+
+Those who use Python for data science tasks shall not throw stuff at me during the session
+
+## What is mlR?
+
+mlR is an R package developed to simplify basic and advanced data science tasks, such as:
+
+- Data preparation
+- Feature Engineering
+- Training Models
+- Validating models
+- Predictions
+- ...
+
+## We use the Kaggle credit card dataset to demonstrate the use of `mlR`
+
+
+
+## Load packages
+
+```{r cars, echo = FALSE, message = FALSE}
+
+required_packages <- c( 
+  # Add to this list the packages that you will use - if unavailable, it will be 
+  # automatically installed
+    "Hmisc",
+    "caret",
+    "kknn",
+    "gbm",
+    "nnet",
+    "h2o",
+    "xgboost",
+    "lightgbm",
+    "mlr",
+    "parallel",
+    "parallelMap",
+    "ggplot2",
+    "data.table",
+    "tidyverse"
+    )
+
+  packages_to_install = required_packages[!(required_packages %in% 
+                                                installed.packages()[, 1])]
+    
+  if (length(packages_to_install) > 0) {
+    install.packages(packages_to_install)
+  }
+    
+  suppressPackageStartupMessages({
+    sapply(required_packages, require, character.only = TRUE)
+  })
+```
+
+## Import the dataset
+
+```{r message = FALSE, results = "hide"}
+#Use fread() from the data.table package to read
+df <- fread("creditcard.csv")  
+                              
+df <- df %>% 
+  data.frame() %>% 
+  mutate(Class = as.factor(Class)) #Convert target variable to categorical type
+```
+
+```{r}
+head(df)
+```
+
